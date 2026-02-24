@@ -61,13 +61,13 @@
     footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e4a12;letter-spacing:.08em;background:#000}
     
     @media (max-width: 768px) {
-      body { font-size: 11px; overflow: auto; }
-      #shell { position: relative; height: auto; }
+      body { font-size: 11px; }
+      #shell { position: fixed; height: 100vh; }
+      #content { padding: 24px 16px 60px; max-width: none; overflow-y: auto; height: calc(100vh - 120px); }
       #topbar { padding: 0 12px; height: 40px; }
       #topbar img { width: 20px; height: 20px; }
       #topbar .name { font-size: 10px; }
       #tabs button { padding: 8px 16px; font-size: 10px; }
-      #content { padding: 24px 16px 60px; max-width: none; }
       .box { padding: 16px 18px; margin-bottom: 12px; }
       h2 { font-size: 9px; margin-bottom: 12px; }
       h3 { font-size: 12px; }
