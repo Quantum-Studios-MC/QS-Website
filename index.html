@@ -240,6 +240,7 @@ function faq(el){
   let transitioning = false;
   let transitionAlpha = 0;
   let oldBg = 0;
+  let nextBg = 0;
   const backgrounds = [];
 
   backgrounds.push({
@@ -525,13 +526,12 @@ function faq(el){
     requestAnimationFrame(loop);
     if(ts-last<28) return;
     const dt=Math.min((ts-last)/1000,0.033);
-    if(ts - lastSwitch > 20000){
-      lastSwitch = ts;
+    if(ts - lastSwitch > 20000 && !transitioning){
       oldBg = currentBg;
       let newBg = Math.floor(Math.random() * backgrounds.length);
       while(newBg === oldBg) newBg = Math.floor(Math.random() * backgrounds.length);
       backgrounds[newBg].init();
-      currentBg = newBg;
+      nextBg = newBg;
       transitioning = true;
       transitionAlpha = 0;
     }
@@ -539,9 +539,12 @@ function faq(el){
       transitionAlpha += dt * 0.25;
       if(transitionAlpha >= 1){
         transitioning = false;
+        currentBg = nextBg;
+        lastSwitch = ts;
       }
     }
-    backgrounds[currentBg].step(dt);
+    let bgToStep = transitioning ? nextBg : currentBg;
+    backgrounds[bgToStep].step(dt);
     if(transitioning){
       backgrounds[oldBg].draw();
       ctx.globalAlpha = transitionAlpha;
