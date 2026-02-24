@@ -95,7 +95,7 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 #tabs button{background:none;border:none;border-right:1px solid var(--br);color:#2e5a22;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 22px;cursor:pointer;white-space:nowrap;transition:color .1s,background .1s}
 #tabs button:hover{color:var(--g);background:rgba(57,255,20,.04)}
 #tabs button.active{color:var(--g);background:rgba(57,255,20,.06);border-bottom:2px solid var(--g)}
-#content{flex:1;max-width:800px;width:100%;margin:0 auto;padding:36px 24px 80px}
+#content{flex:1;max-width:800px;width:100%;margin:0 auto;padding:36px 24px 80px;overflow-y:auto}
 .tab{display:none}.tab.active{display:block}
 .box{background:rgba(0,0,0,0.91);border:1px solid var(--br);padding:20px 22px;margin-bottom:16px}
 .box:last-child{margin-bottom:0}
@@ -187,6 +187,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
         <div class="links-group">
           <div class="link-row"><a href="https://discord.gg/w9B4Ge8gmq" target="_blank"><span class="link-left"><span class="link-prefix">~</span>Discord server</span><span class="link-arrow">&#8250;</span></a></div>
           <div class="link-row"><a href="https://github.com/Quantum-Studios-MC" target="_blank"><span class="link-left"><span class="link-prefix">~</span>GitHub organization</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="mailto:Quantum-Studios-MC@proton.me"><span class="link-left"><span class="link-prefix">~</span>Email</span><span class="link-arrow">&#8250;</span></a></div>
         </div>
       </div>
       <div class="box">
@@ -205,18 +206,18 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
       <div class="box">
         <h2>Resources</h2>
         <div class="links-group">
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Contributor Guide</span><span class="link-arrow">&#8250;</span></a></div>
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Project Standards</span><span class="link-arrow">&#8250;</span></a></div>
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Onboarding Checklist</span><span class="link-arrow">&#8250;</span></a></div>
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Code of Conduct</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('contributor-guide'); return false;"><span class="link-left"><span class="link-prefix">~</span>Contributor Guide</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('project-standards'); return false;"><span class="link-left"><span class="link-prefix">~</span>Project Standards</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('onboarding-checklist'); return false;"><span class="link-left"><span class="link-prefix">~</span>Onboarding Checklist</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('code-of-conduct'); return false;"><span class="link-left"><span class="link-prefix">~</span>Code of Conduct</span><span class="link-arrow">&#8250;</span></a></div>
         </div>
       </div>
       <div class="box">
         <h2>Documentation</h2>
         <div class="links-group">
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Architecture Decisions</span><span class="link-arrow">&#8250;</span></a></div>
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Roadmap</span><span class="link-arrow">&#8250;</span></a></div>
-          <div class="link-row"><a href="#"><span class="link-left"><span class="link-prefix">~</span>Meeting Notes</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('architecture-decisions'); return false;"><span class="link-left"><span class="link-prefix">~</span>Architecture Decisions</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('roadmap'); return false;"><span class="link-left"><span class="link-prefix">~</span>Roadmap</span><span class="link-arrow">&#8250;</span></a></div>
+          <div class="link-row"><a href="#" onclick="openDoc('meeting-notes'); return false;"><span class="link-left"><span class="link-prefix">~</span>Meeting Notes</span><span class="link-arrow">&#8250;</span></a></div>
         </div>
       </div>
     </div>
@@ -236,6 +237,150 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
   <footer>&copy; 2025 Quantum Studios</footer>
 </div>
 
+<div id="contributor-guide" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Contributor Guide</h2>
+    <p>QuantumStudios accepts contributions from developers at any skill level. This guide covers what you need to know before you start.</p>
+    <p><strong>Before you contribute:</strong><br>Read the project's README and open issues before touching any code. If the thing you want to build is not already tracked, open an issue describing it and wait for acknowledgment before starting work. This prevents duplicate effort and wasted time.</p>
+    <p><strong>Setting up:</strong><br>Fork the repository, clone your fork, and create a branch named after the issue or feature you are working on. Do not commit directly to main. Keep your fork synced with upstream before opening a pull request.</p>
+    <p><strong>Opening a pull request:</strong><br>Fill out the PR template. Link the issue it addresses. Describe what changed and why. Keep the diff focused. One concern per PR. PRs that mix unrelated changes will be asked to split.</p>
+    <p><strong>Review process:</strong><br>A maintainer will review your PR within a reasonable time. You may receive requests for changes. Address them directly and avoid force-pushing during active review unless asked to rebase. Once approved, a maintainer merges it.</p>
+    <p><strong>First contribution tips:</strong><br>Look for issues tagged `good first issue`. These are scoped intentionally for new contributors. Ask questions in the Discord before spending hours going in the wrong direction.</p>
+  </div>
+</div>
+
+<div id="project-standards" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Project Standards</h2>
+    <p>All projects under the QuantumStudios banner follow a shared baseline of standards. Individual projects may add stricter rules on top, but none may go below this baseline.</p>
+    <p><strong>Naming:</strong><br>Classes, methods, and variables use standard Java naming conventions. No abbreviations unless the full name is genuinely unwieldy. Names should describe what something is or does, not how it is implemented.</p>
+    <p><strong>Package structure:</strong></p>
+    <ul>
+      <li><code>api</code> — interfaces and type definitions only</li>
+      <li><code>impl</code> or <code>internal</code> — implementations of API types</li>
+      <li><code>utils</code> — static helpers shared across the project, outside the API package</li>
+      <li><code>client</code> — client-only code</li>
+      <li><code>common</code> — shared logic</li>
+    </ul>
+    <p><strong>Code style:</strong><br>4-space indentation. No tabs. Opening braces on the same line. Blank line between methods. Imports sorted and unused imports removed. No wildcard imports.</p>
+    <p><strong>Dependencies:</strong><br>Do not add dependencies without discussion. Every dependency is a maintenance obligation. If a utility class from a library can be replicated in under 20 lines, replicate it.</p>
+    <p><strong>Versioning:</strong><br>Projects use semantic versioning. Breaking changes increment the major version. New features increment minor. Patches increment patch. Version tags are created on the main branch only after a passing build.</p>
+  </div>
+</div>
+
+<div id="onboarding-checklist" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Onboarding Checklist</h2>
+    <p>Complete these steps when joining a project under the QuantumStudios banner.</p>
+    <ul>
+      <li>[ ] Read the project README fully</li>
+      <li>[ ] Read the Contribution Guidelines</li>
+      <li>[ ] Read the Project Standards document</li>
+      <li>[ ] Join the Discord and introduce yourself in the appropriate channel</li>
+      <li>[ ] Set up your local development environment following the project setup guide</li>
+      <li>[ ] Build the project locally and confirm it compiles cleanly</li>
+      <li>[ ] Find an issue tagged `good first issue` and comment that you are working on it</li>
+      <li>[ ] Open your first PR, however small</li>
+      <li>[ ] Ask your assigned mentor to review it</li>
+    </ul>
+    <p>If you do not have an assigned mentor, ask in the Discord and one will be paired with you. No one is expected to figure out the codebase alone.</p>
+  </div>
+</div>
+
+<div id="code-of-conduct" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Code of Conduct</h2>
+    <p>QuantumStudios is a working environment. The standards here apply in all project spaces including the Discord, GitHub, pull request comments, and issue threads.</p>
+    <p><strong>Expected behavior:</strong></p>
+    <ul>
+      <li>Communicate clearly and professionally</li>
+      <li>Accept feedback on your work without treating it as personal criticism</li>
+      <li>Give feedback on work without making it personal</li>
+      <li>Acknowledge when you are wrong and move on</li>
+      <li>Ask questions before making assumptions</li>
+    </ul>
+    <p><strong>Unacceptable behavior:</strong></p>
+    <ul>
+      <li>Harassment, dismissiveness, or targeted hostility toward any contributor</li>
+      <li>Derailing technical discussion with personal grievances</li>
+      <li>Claiming credit for work you did not do</li>
+      <li>Deliberately withholding information that would help another contributor</li>
+    </ul>
+    <p><strong>Enforcement:</strong><br>Violations are handled by the maintainers. The response scales with severity: a warning, a temporary removal from project spaces, or a permanent ban. Decisions are made by maintainers and are final unless formally appealed in writing.</p>
+    <p>This code of conduct exists to protect the work environment, not to police opinions. Disagreement about technical direction is healthy. Contempt for people is not.</p>
+  </div>
+</div>
+
+<div id="architecture-decisions" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Architecture Decisions</h2>
+    <p>This document records significant architectural choices made across QuantumStudios projects and the reasoning behind them.</p>
+    <h3>ADR-001: No proxy classes for sided loading</h3>
+    <p><em>Status: Adopted across all projects</em></p>
+    <p>Proxy classes were previously used to separate client and server initialization. This pattern adds a layer of indirection that obscures where initialization actually happens and makes tracing startup behavior harder. The decision was made to check the loading side directly in the mod class and branch from there. This is more explicit and easier to follow for new contributors.</p>
+    <h3>ADR-002: API packages contain definitions only</h3>
+    <p><em>Status: Adopted across all projects</em></p>
+    <p>Early projects mixed interface definitions with helper abstractions inside the API package, making it unclear what was part of the public contract and what was implementation detail. API packages now contain only interfaces and type definitions. All abstractions and base classes live outside the API package.</p>
+    <h3>ADR-003: JetBrains annotations for nullability</h3>
+    <p><em>Status: Adopted across all projects</em></p>
+    <p>javax.annotation is not reliably present in a standard Forge environment. JetBrains annotations are included as a lightweight compile-time dependency with no runtime cost and consistent IDE support.</p>
+    <h3>ADR-004: Utils package is a sibling, not a child, of API</h3>
+    <p><em>Status: Adopted across all projects</em></p>
+    <p>Placing utils inside the API package implied that utility methods were part of the public API contract. They are not. Utils is now a sibling package, making the distinction clear.</p>
+  </div>
+</div>
+
+<div id="roadmap" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Roadmap</h2>
+    <p>The roadmap reflects current priorities across QuantumStudios projects. It is updated when direction changes, not on a fixed schedule.</p>
+    <h3>Now:</h3>
+    <ul>
+      <li>Establishing core organizational infrastructure</li>
+      <li>Documenting standards, onboarding process, and architecture decisions</li>
+      <li>Recruiting first wave of contributors</li>
+      <li>Setting up shared tooling and project templates</li>
+    </ul>
+    <h3>Next:</h3>
+    <ul>
+      <li>First project under the banner reaches initial release</li>
+      <li>Mentorship pairing system operational</li>
+      <li>Project template available for new teams to fork</li>
+    </ul>
+    <h3>Later:</h3>
+    <ul>
+      <li>Multiple active projects under the banner</li>
+      <li>Established reputation for shipping complete, maintained software</li>
+      <li>Contributor recognition system in place</li>
+    </ul>
+    <p>Items move between stages based on capacity, not calendar. A feature does not get scheduled until there is someone with time and ability to build it.</p>
+  </div>
+</div>
+
+<div id="meeting-notes" class="tab">
+  <div class="box">
+    <button onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <h2>Meeting Notes</h2>
+    <p>Meeting notes are posted here after each community sync. They summarize decisions made, items discussed, and action items assigned.</p>
+    <p><em>No meetings have been held yet. Notes will appear here once the first community sync takes place.</em></p>
+    <p><strong>Format for future entries:</strong></p>
+    <ul>
+      <li>Date</li>
+      <li>Attendees</li>
+      <li>Topics discussed</li>
+      <li>Decisions made</li>
+      <li>Action items and owners</li>
+      <li>Next meeting date</li>
+    </ul>
+  </div>
+</div>
+
 <script>
 function show(id,btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -246,6 +391,10 @@ function show(id,btn){
 function faq(el){
   const a=el.nextElementSibling;
   el.querySelector('.tog').textContent=a.classList.toggle('open')?'[-]':'[+]';
+}
+function openDoc(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
 (function(){
