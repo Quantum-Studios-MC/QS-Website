@@ -1,15 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QuantumStudios</title>
-<link rel="icon" type="image/x-icon" href="qs.ico">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
-:root{--g:#39ff14;--gd:#1e8a0c;--bk:#000;--br:#173510}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;color:var(--g);font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;min-height:100vh;overflow-x:hidden}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Studios</title>
+  <link rel="icon" type="image/x-icon" href="qs.ico">
+  <meta property="og:title" content="Quantum Studios">
+  <meta property="og:description" content="A cooperative development collective for developers who want to build real things under a shared identity.">
+  <meta property="og:image" content="qs.png">
+  <meta property="og:type" content="website">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+    :root{--g:#39ff14;--gd:#1e8a0c;--bk:#000;--br:#173510}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:#000;color:var(--g);font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;min-height:100vh;overflow-x:hidden;overflow-y:hidden}
+    canvas#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+    #shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+    #topbar{display:flex;align-items:center;height:42px;border-bottom:1px solid var(--br);background:#000;padding:0 20px;gap:14px;flex-shrink:0}
+    #topbar img{width:24px;height:24px;image-rendering:pixelated;flex-shrink:0}
+    #topbar .name{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g);flex-shrink:0}
+    #topbar .sep{color:var(--br);flex-shrink:0}
+    #topbar .sub{color:#2a5a1a;font-size:11px;letter-spacing:.07em}
+    #tabs{display:flex;border-bottom:1px solid var(--br);background:#000;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+    #tabs::-webkit-scrollbar{display:none}
+    #tabs button{background:none;border:none;border-right:1px solid var(--br);color:#2e5a22;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 22px;cursor:pointer;white-space:nowrap;transition:color .1s,background .1s}
+    #tabs button:hover{color:var(--g);background:rgba(57,255,20,.04)}
+    #tabs button.active{color:var(--g);background:rgba(57,255,20,.06);border-bottom:2px solid var(--g)}
+    #content{flex:1;max-width:800px;width:100%;margin:0 auto;padding:36px 24px 80px}
+    .tab{display:none}.tab.active{display:block}
+    .box{background:rgba(0,0,0,0.91);border:1px solid var(--br);padding:20px 22px;margin-bottom:16px}
+    .box:last-child{margin-bottom:0}
+    h2{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gd);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    h2::before{content:'//';color:var(--g)}
+    h3{font-size:13px;font-weight:700;color:var(--g);margin-bottom:6px}
+    p{color:#6fa055;font-size:12px;margin-bottom:10px;line-height:1.8}
+    p:last-child{margin-bottom:0}
+    .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--br);border:1px solid var(--br);margin-top:2px}
+    .vcell{background:#000;padding:12px 14px}
+    .vcell .lbl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gd);margin-bottom:6px}
+    .vcell p{margin-bottom:0;font-size:11px;line-height:1.75}
+    .card{border:1px solid var(--br);background:#000;padding:14px 18px;margin-bottom:8px;transition:border-color .12s}
+    .card:last-child{margin-bottom:0}
+    .card:hover{border-color:var(--gd)}
+    .links-group{border-top:1px solid var(--br)}
+    .link-row{border-bottom:1px solid var(--br);transition:background .08s}
+    .link-row:hover{background:rgba(57,255,20,.03)}
+    .link-row a{display:flex;align-items:center;justify-content:space-between;padding:9px 2px;color:#6fa055;text-decoration:none;font-size:12px;transition:color .08s}
+    .link-row:hover a{color:var(--g)}
+    .link-left{display:flex;align-items:center;gap:10px}
+    .link-prefix{color:var(--gd);font-size:11px}
+    .link-arrow{color:#1a3a14;transition:color .08s}
+    .link-row:hover .link-arrow{color:var(--gd)}
+    .faq-item{border-bottom:1px solid var(--br)}
+    .faq-item:first-child{border-top:1px solid var(--br)}
+    .faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:11px 0;cursor:pointer;color:var(--g);font-size:12px;font-weight:600;user-select:none}
+    .faq-q .tog{color:var(--gd);flex-shrink:0;font-weight:400}
+    .faq-a{display:none;color:#6fa055;font-size:12px;padding-bottom:11px;line-height:1.8}
+    .faq-a.open{display:block}
+    footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e4a12;letter-spacing:.08em;background:#000}
+  </style>
 canvas#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 #shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
 #topbar{display:flex;align-items:center;height:42px;border-bottom:1px solid var(--br);background:#000;padding:0 20px;gap:14px;flex-shrink:0}
@@ -184,6 +233,7 @@ function faq(el){
   let stars = [];
   let falling;
   let voronoiPoints;
+  let codeRain;
   let t = 0;
   let currentBg = 0;
   let lastSwitch = 0;
@@ -315,245 +365,31 @@ function faq(el){
 
   backgrounds.push({
     init: function(){
-      golGrid = new Uint8Array(N);
-      for(let k=0;k<N;k++) golGrid[k] = Math.random() > 0.5 ? 1 : 0;
-    },
-    step: function(dt){
-      let newGrid = new Uint8Array(N);
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        let count = 0;
-        for(let dj=-1;dj<=1;dj++) for(let di=-1;di<=1;di++) if(di||dj) count += golGrid[IX(i+di,j+dj)];
-        let alive = golGrid[IX(i,j)];
-        if(alive){
-          if(count === 2 || count === 3) newGrid[IX(i,j)] = 1;
-        } else {
-          if(count === 3) newGrid[IX(i,j)] = 1;
-        }
-      }
-      golGrid = newGrid;
-    },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        if(golGrid[IX(i,j)]){
-          ctx.fillStyle='#0f0';
-          ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
-        }
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){},
-    step: function(dt){},
-    draw: function(){
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        const g = Math.random()*255 | 0;
-        ctx.fillStyle='rgb(0,'+g+',0)';
-        ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){ t = 0; },
-    step: function(dt){ t += dt; },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        const val = (Math.sin(i*0.1 + t) + Math.sin(j*0.1 + t)) * 0.5;
-        const g = (val * 127 + 128) | 0;
-        ctx.fillStyle='rgb(0,'+g+',0)';
-        ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){
-      particles = [];
-      for(let k=0;k<100;k++){
-        particles.push({
-          x: Math.random()*W,
-          y: Math.random()*H,
-          vx: (Math.random()-0.5)*200,
-          vy: (Math.random()-0.5)*200
-        });
-      }
-    },
-    step: function(dt){
-      for(const p of particles){
-        p.x += p.vx * dt;
-        p.y += p.vy * dt;
-        if(p.x < 0 || p.x > W) p.vx *= -1;
-        if(p.y < 0 || p.y > H) p.vy *= -1;
-      }
-    },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      ctx.fillStyle='#0f0';
-      for(const p of particles){
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 5, 0, 2*Math.PI);
-        ctx.fill();
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){
-      fireGrid = new Float32Array(N);
-      for(let k=0;k<N;k++) fireGrid[k] = Math.random();
-    },
-    step: function(dt){
-      for(let j=R-2;j>=1;j--) for(let i=1;i<C-1;i++){
-        fireGrid[IX(i,j)] = (fireGrid[IX(i-1,j-1)] + fireGrid[IX(i,j-1)] + fireGrid[IX(i+1,j-1)]) / 3 - 0.01;
-        if(fireGrid[IX(i,j)] < 0) fireGrid[IX(i,j)] = 0;
-      }
-      for(let i=1;i<C-1;i++) fireGrid[IX(i,R-1)] = Math.random();
-    },
-    draw: function(){
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        const val = fireGrid[IX(i,j)];
-        const g = val * 255 | 0;
-        ctx.fillStyle='rgb(0,'+g+',0)';
-        ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){
-      raindrops = [];
-      for(let k=0;k<50;k++){
-        raindrops.push({
-          x: Math.random()*W,
-          y: Math.random()*H,
-          speed: 100 + Math.random()*100
-        });
-      }
-    },
-    step: function(dt){
-      for(const r of raindrops){
-        r.y += r.speed * dt;
-        if(r.y > H) r.y = 0;
-      }
-    },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      ctx.strokeStyle='#0f0';
-      for(const r of raindrops){
-        ctx.beginPath();
-        ctx.moveTo(r.x, r.y);
-        ctx.lineTo(r.x, r.y + 10);
-        ctx.stroke();
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){
-      stars = [];
-      for(let k=0;k<200;k++){
-        stars.push({
-          x: Math.random()*W,
-          y: Math.random()*H,
-          brightness: Math.random()
-        });
-      }
-    },
-    step: function(dt){
-      for(const s of stars){
-        s.brightness += (Math.random()-0.5)*dt;
-        s.brightness = Math.max(0, Math.min(1, s.brightness));
-      }
-    },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      for(const s of stars){
-        const b = s.brightness * 255 | 0;
-        ctx.fillStyle='rgb(0,'+b+',0)';
-        ctx.fillRect(s.x, s.y, 2, 2);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){ t = 0; },
-    step: function(dt){ t += dt; },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        const val = Math.sin(i*0.05 + t) * Math.cos(j*0.05 + t);
-        const g = (val * 127 + 128) | 0;
-        ctx.fillStyle='rgb(0,'+g+',0)';
-        ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){},
-    step: function(dt){},
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
-        const val = Math.sin(i*0.1) * Math.cos(j*0.1);
-        const g = (val * 127 + 128) | 0;
-        ctx.fillStyle='rgb(0,'+g+',0)';
-        ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
-        ctx.fillRect(W - (i-1)*SZ - SZ,(j-1)*SZ,SZ+1,SZ+1);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){
-      falling = new Float32Array(C);
-      for(let i=0;i<C;i++) falling[i] = Math.random()*R;
-    },
-    step: function(dt){
-      for(let i=0;i<C;i++){
-        falling[i] += dt * 10;
-        if(falling[i] > R) falling[i] = 0;
-      }
-    },
-    draw: function(){
-      ctx.fillStyle='#000';
-      ctx.fillRect(0,0,W,H);
-      ctx.fillStyle='#0f0';
-      for(let i=0;i<C;i++){
-        const y = falling[i];
-        ctx.fillRect(i*SZ, y*SZ, SZ, SZ);
-      }
-    }
-  });
-
-  backgrounds.push({
-    init: function(){
       voronoiPoints = [];
-      for(let k=0;k<10;k++){
+      for(let k=0;k<15;k++){
         voronoiPoints.push({
           x: Math.random()*C,
           y: Math.random()*R,
-          r: Math.random()*255,
-          g: Math.random()*255,
-          b: Math.random()*255
+          vx: (Math.random()-0.5)*20,
+          vy: (Math.random()-0.5)*20,
+          g: Math.random()*255
         });
       }
     },
-    step: function(dt){},
+    step: function(dt){
+      for(const p of voronoiPoints){
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        if(p.x < 0) p.x = C;
+        if(p.x > C) p.x = 0;
+        if(p.y < 0) p.y = R;
+        if(p.y > R) p.y = 0;
+      }
+    },
     draw: function(){
       for(let j=1;j<R-1;j++) for(let i=1;i<C-1;i++){
         let minD = 1e9;
-        let col = {r:0,g:0,b:0};
+        let col = {g:0};
         for(const p of voronoiPoints){
           const d = (i - p.x)**2 + (j - p.y)**2;
           if(d < minD){
@@ -564,6 +400,46 @@ function faq(el){
         ctx.fillStyle='rgb(0,'+ (col.g|0) +',0)';
         ctx.fillRect((i-1)*SZ,(j-1)*SZ,SZ+1,SZ+1);
       }
+    }
+  });
+
+  backgrounds.push({
+    init: function(){
+      codeRain = [];
+      const cols = Math.floor(W / 12);
+      for(let i=0; i<cols; i++){
+        codeRain.push({
+          x: i * 12,
+          y: Math.random() * H - 200,
+          speed: 50 + Math.random() * 50,
+          chars: Array.from({length:20}, () => Math.random() > 0.5 ? '0' : '1')
+        });
+      }
+    },
+    step: function(dt){
+      for(const col of codeRain){
+        col.y += col.speed * dt;
+        if(col.y > H + 200) col.y = -200;
+        if(Math.random() < 0.3){
+          col.chars.unshift(Math.random() > 0.5 ? '0' : '1');
+          col.chars.pop();
+        }
+      }
+    },
+    draw: function(){
+      ctx.fillStyle='#000';
+      ctx.fillRect(0,0,W,H);
+      ctx.font = '12px monospace';
+      ctx.fillStyle='#0f0';
+      for(const col of codeRain){
+        for(let k=0; k<20; k++){
+          const char = col.chars[k];
+          const alpha = 1 - k / 20;
+          ctx.globalAlpha = alpha;
+          ctx.fillText(char, col.x, col.y - k * 15);
+        }
+      }
+      ctx.globalAlpha = 1;
     }
   });
 
@@ -649,7 +525,7 @@ function faq(el){
     requestAnimationFrame(loop);
     if(ts-last<28) return;
     const dt=Math.min((ts-last)/1000,0.033);
-    if(ts - lastSwitch > 10000){
+    if(ts - lastSwitch > 20000){
       lastSwitch = ts;
       oldBg = currentBg;
       let newBg = Math.floor(Math.random() * backgrounds.length);
@@ -660,7 +536,7 @@ function faq(el){
       transitionAlpha = 0;
     }
     if(transitioning){
-      transitionAlpha += dt * 0.5;
+      transitionAlpha += dt * 0.25;
       if(transitionAlpha >= 1){
         transitioning = false;
       }
