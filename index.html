@@ -63,7 +63,7 @@
     @media (max-width: 768px) {
       body { font-size: 11px; overflow: hidden; }
       #shell { position: fixed; height: 100vh; }
-      #content { padding: 24px 16px 60px; max-width: none; overflow-y: auto; height: calc(100vh - 120px); }
+      #content { overflow-y: auto; }
       #topbar { padding: 0 12px; height: 40px; }
       #topbar img { width: 20px; height: 20px; }
       #topbar .name { font-size: 10px; }
@@ -96,8 +96,8 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 #tabs button{background:none;border:none;border-right:1px solid var(--br);color:#2e5a22;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 22px;cursor:pointer;white-space:nowrap;transition:color .1s,background .1s}
 #tabs button:hover{color:var(--g);background:rgba(57,255,20,.04)}
 #tabs button.active{color:var(--g);background:rgba(57,255,20,.06);border-bottom:2px solid var(--g)}
-#content{flex:1;min-height:0;overflow-y:auto}
-.content-inner{max-width:800px;width:100%;margin:0 auto;padding:36px 24px 0}
+#content{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;}
+.content-inner{max-width:800px;width:100%;margin:0 auto;padding:36px 24px 80px}
 .tab{display:none}.tab.active{display:block}
 .box{background:rgba(0,0,0,0.91);border:1px solid var(--br);padding:20px 22px;margin-bottom:16px}
 .box:last-child{margin-bottom:0}
