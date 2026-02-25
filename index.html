@@ -96,7 +96,8 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 #tabs button{background:none;border:none;border-right:1px solid var(--br);color:#2e5a22;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 22px;cursor:pointer;white-space:nowrap;transition:color .1s,background .1s}
 #tabs button:hover{color:var(--g);background:rgba(57,255,20,.04)}
 #tabs button.active{color:var(--g);background:rgba(57,255,20,.06);border-bottom:2px solid var(--g)}
-#content{height:calc(100vh - 80px);max-width:800px;width:100%;margin:0 auto;padding:36px 24px 0;overflow-y:auto}
+#content{flex:1;min-height:0;overflow-y:auto}
+.content-inner{max-width:800px;width:100%;margin:0 auto;padding:36px 24px 0}
 .tab{display:none}.tab.active{display:block}
 .box{background:rgba(0,0,0,0.91);border:1px solid var(--br);padding:20px 22px;margin-bottom:16px}
 .box:last-child{margin-bottom:0}
@@ -127,7 +128,7 @@ p:last-child{margin-bottom:0}
 .faq-q .tog{color:var(--gd);flex-shrink:0;font-weight:400}
 .faq-a{display:none;color:#6fa055;font-size:12px;padding-bottom:11px;line-height:1.8}
 .faq-a.open{display:block}
-.back-btn{background:none;border:1px solid var(--br);color:var(--g);font-family:'JetBrains Mono',monospace;font-size:11px;padding:8px 16px;cursor:pointer;transition:color .1s,background .1s}
+.back-btn{background:none;border:1px solid var(--br);color:var(--g);font-family:'JetBrains Mono',monospace;font-size:11px;padding:8px 16px;cursor:pointer;transition:color .1s,background .1s;margin-bottom:16px}
 .back-btn:hover{background:rgba(57,255,20,.04)}
 .box iframe{height:400px}
 footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e4a12;letter-spacing:.08em;background:#000}
@@ -149,6 +150,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
     <button onclick="show('faq',this)">FAQ</button>
   </div>
   <div id="content">
+  <div class="content-inner">
     <div id="home" class="tab active">
       <div class="box">
         <h2>What we are</h2>
@@ -240,7 +242,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="contributor-guide" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Contributor Guide</h2>
     <p>QuantumStudios accepts contributions from developers at any skill level. This guide covers what you need to know before you start.</p>
     <p><strong>Before you contribute:</strong><br>Read the project's README and open issues before touching any code. If the thing you want to build is not already tracked, open an issue describing it and wait for acknowledgment before starting work. This prevents duplicate effort and wasted time.</p>
@@ -253,7 +255,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="project-standards" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Project Standards</h2>
     <p>All projects under the QuantumStudios banner follow a shared baseline of standards. Individual projects may add stricter rules on top, but none may go below this baseline.</p>
     <p><strong>Naming:</strong><br>Classes, methods, and variables use standard Java naming conventions. No abbreviations unless the full name is genuinely unwieldy. Names should describe what something is or does, not how it is implemented.</p>
@@ -273,7 +275,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="onboarding-checklist" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Onboarding Checklist</h2>
     <p>Complete these steps when joining a project under the QuantumStudios banner.</p>
     <ul>
@@ -293,7 +295,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="code-of-conduct" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Code of Conduct</h2>
     <p>QuantumStudios is a working environment. The standards here apply in all project spaces including the Discord, GitHub, pull request comments, and issue threads.</p>
     <p><strong>Expected behavior:</strong></p>
@@ -318,7 +320,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="architecture-decisions" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Architecture Decisions</h2>
     <p>This document records significant architectural choices made across QuantumStudios projects and the reasoning behind them.</p>
     <h3>ADR-001: No proxy classes for sided loading</h3>
@@ -338,7 +340,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="roadmap" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Roadmap</h2>
     <p>The roadmap reflects current priorities across QuantumStudios projects. It is updated when direction changes, not on a fixed schedule.</p>
     <h3>Now:</h3>
@@ -366,7 +368,7 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
 
 <div id="meeting-notes" class="tab">
   <div class="box">
-    <button class="back-btn" onclick="show('links', document.querySelector('#tabs button[onclick*=&quot;links&quot;]'))">← Back to Links</button>
+    <button class="back-btn" onclick="backToLinks()">← Back to Links</button>
     <h2>Meeting Notes</h2>
     <p>Meeting notes are posted here after each community sync. They summarize decisions made, items discussed, and action items assigned.</p>
     <p><em>No meetings have been held yet. Notes will appear here once the first community sync takes place.</em></p>
@@ -382,15 +384,18 @@ footer{border-top:1px solid var(--br);padding:14px 24px;font-size:10px;color:#1e
   </div>
 </div>
   </div>
+  </div>
   <footer>&copy; 2025 Quantum Studios</footer>
 </div>
 
 <script>
+var _linksBtn;
 function show(id,btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(id == 'links') _linksBtn = btn;
 }
 function faq(el){
   const a=el.nextElementSibling;
@@ -399,6 +404,9 @@ function faq(el){
 function openDoc(id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+}
+function backToLinks(){
+  show('links', _linksBtn);
 }
 
 (function(){
