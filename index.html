@@ -27,7 +27,7 @@
     #tabs button{background:none;border:none;border-right:1px solid var(--br);color:#2e5a22;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 22px;cursor:pointer;white-space:nowrap;transition:color .1s,background .1s}
     #tabs button:hover{color:var(--g);background:rgba(57,255,20,.04)}
     #tabs button.active{color:var(--g);background:rgba(57,255,20,.06);border-bottom:2px solid var(--g)}
-    #content{height:auto;overflow:visible}
+    #content{height:calc(100vh - 120px);overflow-y:auto;}
     .tab{display:none}.tab.active{display:block}
     .box{background:rgba(0,0,0,0.91);border:1px solid var(--br);padding:20px 22px;margin-bottom:16px}
     .box:last-child{margin-bottom:0}
@@ -133,6 +133,7 @@
       <div class="box"><h2>Projects</h2><p>Projects are in early formation. Check back soon or join to help shape what gets built first.</p></div>
       <div class="box"><h2>Project principles</h2><p>Every project under the banner follows the same rules: defined scope before first commit, documented decisions, no feature added without a reason, and a clear completion target. These are not suggestions. They are what separates finished software from abandoned repositories.</p></div>
     </div>
+    
     <div id="join" class="tab">
       <div class="box"><h2>Who fits here</h2><p>Developers at any level who want to grow within a collective effort rather than struggle alone. You do not need experience. You need to show up consistently, ask questions, and care about finishing things.</p></div>
       <div class="box">
